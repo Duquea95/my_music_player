@@ -1,0 +1,34 @@
+.component-artistCard,.component-albumCard,.component-albumSong,.component-resultCard{
+    width: 200px;
+    border-radius: 5px;
+    margin-bottom: 25px;
+}
+.component-artistCard{height: 250px;}
+.component-songCard{height: 100px;}
+.songCard-item{ display: flex;}
+.album-resultCard,.artistCard-item{
+    width: 100%;
+    align-items: center;
+    background: rgba(30,30,30,1);
+    height: inherit;
+}
+.resultCard-img, .resultCard-text{
+    width: 75%;
+}
+.artistCard-item img{
+    border-radius: 100px;
+}
+.artist-image{
+    width: 125px;
+    height: 125px;
+}
+.song-image{
+    
+}
+.artistCard-item p, .album-resultCard p{
+    color: #f8f8f8;
+    letter-spacing: .8px;
+}
+.resultCard-mainText{
+    font-size: 1.3rem;
+}

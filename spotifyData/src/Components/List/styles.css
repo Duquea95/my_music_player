@@ -1,0 +1,18 @@
+.component-list{
+    display: flex;
+}
+.list{
+    width: 450px;
+}
+.listItem{
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.listItems__component{
+    height: 400px;
+    overflow: scroll;
+}
+.list-title{
+    margin-bottom: 25px;
+}
