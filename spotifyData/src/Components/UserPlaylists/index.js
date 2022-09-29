@@ -3,7 +3,6 @@
 const UserPlaylists = ({playlist, getPlaylistSongs}) =>{
 
     const handlePlaylists = () => {
-        // console.log(playlist)
         getPlaylistSongs(playlist.id)
     }
 

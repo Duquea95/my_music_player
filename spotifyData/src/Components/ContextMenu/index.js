@@ -1,51 +1,40 @@
-import { forwardRef,useEffect } from "react";
+import {useState, forwardRef,useEffect } from "react";
 import useContextMenu from "../useContextMenu";
 import styled from 'styled-components'
 
 const ContextMenu = forwardRef((props,ref) => {
-    const { anchorPoint, show } = useContextMenu()
+    const [showSubContext, setShowSubContext] = useState(false);
+    const { anchorPoint, show } = useContextMenu();
     
-    useEffect(()=>{
-        console.log(ref)
-        // console.log(props)
-        console.log(ref.current)
-    },[show])
-  
-    const addToPlaylist = () =>{
-        return ref.current.contextAllPlaylist.current.items.map( res =>{
-          <div>{res.name}</div>
-    })}
+    const handleHoverParent = (val) => {
+        setShowSubContext(val)
+    };
 
-    const contextSubMenu = () =>{
-        console.log(ref)
-        return(
-            <div>
-                {ref.current.contextAllPlaylist.current.items.map( res => {
-                  <div>{res.name}</div>
-                })}
-            </div>
-    )}
-
-    const handlePlay = (e, uri) => {
-        props.chooseTrack(uri)
-    }
-
-    if (show){
+    if (show && props.showContextPlaylistOptions){
         return (
         <>
-        <ContextMenuContainer style={{ top: anchorPoint.y, left: anchorPoint.x }}>
-            <li onClick={e => handlePlay(e,ref.current.contextSongUri.current.uri)}>Play</li>
-            <li>Add To Queue</li>
+        <ContextMenuList style={{ top: anchorPoint.y, left: anchorPoint.x }} onMouseLeave={e => handleHoverParent(false)}>
+            <MenuListItem onClick={e => props.chooseTrack(ref.current.contextSongUri.current)}>Play</MenuListItem>
+            <MenuListItem>Add To Queue</MenuListItem>
             <hr className="divider" />
-            <li>
-              Add to playlist
-              <div>{contextSubMenu()}</div>
-            </li>
-            <li>Remove from playlist</li>
+            <MenuListItem onMouseOver={e => handleHoverParent(true)}>
+            Add to playlist
+            {showSubContext && 
+                <ContextSubMenuDiv>
+                {props.playlists.items.map(res=>{
+                    return  (
+                    <MenuListItem key={res.uri} 
+                    onClick={e => props.handleAddToPlaylist(res.id)} style={{color: 'black'}}>{res.name}
+                    </MenuListItem>
+                    )
+                })}
+                </ContextSubMenuDiv>
+            }
+            </MenuListItem>
+            <MenuListItem onClick={props.handleRemoveFromPlaylist}>Remove from playlist</MenuListItem>
             <hr className="divider" />
-            <li>Exit</li>
-        </ContextMenuContainer>
-        {/* <ContextSubMenu /> */}
+            <MenuListItem>Exit</MenuListItem>
+        </ContextMenuList>
         </>)
     }
     return <></>;
@@ -53,12 +42,13 @@ const ContextMenu = forwardRef((props,ref) => {
 
 export default ContextMenu;
 
-const ContextMenuContainer = styled.ul`
+// Styled Components
+const ContextMenuList = styled.ul`
     font-size: 14px;
     background-color: #fff;
     border-radius: 2px;
-    padding: 5px 0 5px 0;
     width: 150px;
+    margin: 0 0 0 150px;
     height: auto;
     margin: 0;
     /* use absolute positioning  */
@@ -67,4 +57,32 @@ const ContextMenuContainer = styled.ul`
     box-shadow: 0 0 20px 0 #ccc;
     opacity: 1;
     transition: opacity 0.5s linear;
+    z-index: 4;
+    
+    cursor: pointer;
 ` 
+const MenuListItem = styled.li`
+padding: 5px 10px;
+`
+const ContextSubList = styled(MenuListItem)`
+position:relative;
+`
+const ContextSubMenuDiv = styled.div`
+font-size: 14px;
+background-color: #fff;
+border-radius: 2px;
+padding: 5px 0 5px 0;
+width: 150px;
+height: auto;
+margin: 0;
+
+z-index: 5;
+top: 0;
+left: 150px;
+
+position: absolute;
+list-style: none;
+box-shadow: 0 0 20px 0 #ccc;
+opacity: 1;
+transition: opacity 0.5s linear;
+`
