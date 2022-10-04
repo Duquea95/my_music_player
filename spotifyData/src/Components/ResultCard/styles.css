@@ -18,12 +18,22 @@
 .artistCard-item img{
     border-radius: 100px;
 }
+.artistCard{
+    margin-right: 25px;
+    background: rgba(255,255,255, 0.1);
+    padding: 25px;
+    border-radius: 5px;
+}
+.artistCard:hover,.songCard:hover{
+    background: rgba(255,255,255, 0.3);
+}
 .artist-image{
     width: 125px;
     height: 125px;
+    border-radius: 65px;
 }
 .song-image{
-    
+    width: 50px;
 }
 .artistCard-item p, .album-resultCard p{
     color: #f8f8f8;

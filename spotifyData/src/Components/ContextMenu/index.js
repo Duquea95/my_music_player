@@ -7,6 +7,7 @@ const ContextMenu = forwardRef((props,ref) => {
     const { anchorPoint, show } = useContextMenu();
     
     const handleHoverParent = (val) => {
+        console.log(props)
         setShowSubContext(val)
     };
 
@@ -19,10 +20,11 @@ const ContextMenu = forwardRef((props,ref) => {
             <hr className="divider" />
             <MenuListItem onMouseOver={e => handleHoverParent(true)}>
             Add to playlist
-            {showSubContext && 
+            {showSubContext &&
                 <ContextSubMenuDiv>
-                {props.playlists.items.map(res=>{
+                {props.playlists.map(res=>{
                     return  (
+                    console.log(res),
                     <MenuListItem key={res.uri} 
                     onClick={e => props.handleAddToPlaylist(res.id)} style={{color: 'black'}}>{res.name}
                     </MenuListItem>

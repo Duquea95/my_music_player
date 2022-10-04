@@ -1,8 +1,12 @@
 const TopResult = (props) => {
     if(props.topResult.length == 0 ) return
+    console.log(props)
+    const handleTopResultClick = () => {
+        props.handleSearchResultClick(props.topResult[0]);
+    }
 
     return(
-        <div style={{width: 400+'px'}} onClick={props.handleTopResultClick}>
+        <div style={{width: 450+'px'}} onClick={handleTopResultClick}>
             <div className='result-title'>
                 <p>Top Result:</p>
             </div>

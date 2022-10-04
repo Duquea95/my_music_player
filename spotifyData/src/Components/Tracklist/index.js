@@ -3,11 +3,6 @@ import ContextMenu from '../ContextMenu'
 import styled from 'styled-components'
 
 const Tracklist = forwardRef((props, ref) =>{
-    
-    useEffect(()=>{
-        // console.log(props)
-    },[ref])
-
     const focusInput = (e, res) =>{
         ref.current.contextSongUri.current = res.uri;
     }

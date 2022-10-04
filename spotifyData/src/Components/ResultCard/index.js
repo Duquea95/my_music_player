@@ -1,28 +1,32 @@
 import React from 'react'
 import './styles.css'
 
-// const ResultCard = ({cardType, name, image, title, uri, followers,duration, chooseTrack}) => {
-const ResultCard = ({cardType, result, chooseTrack}) => {
-    const handlePlay = () => {
-        if(cardType == 'artist') return
-        chooseTrack(result.uri)
+const ResultCard = (props) => {
+    const handlePlay = (e) => {
+        if(props.cardType == 'artist') return
+
+        props.chooseTrack(e,props.result.uri);
+    }
+    const handleArtistClick = () => {
+        props.handleSearchResultClick(props.result);
     }
     return(
-        <div className={"resultCard"+ (cardType === 'song' ? ' flex' : '')} style={{width: 100+'%', justifyContent: 'space-between'}} onClick={handlePlay}>
-            <div className={cardType == 'song' ? 'flex': ''}>
-                <div>
-                    <img className={cardType == 'song' ? 'song-image' : 'artist-image'} src={result.image}/>
+        <div className={"resultCard"+ (props.cardType === 'song' ? ' flex songCard' : ' artistCard')} style={props.cardType === 'song' ? {width: 100+'%',justifyContent: 'space-between'} : {}} onClick={props.cardType == "artist" ? handleArtistClick : handlePlay}>
+            <div className={props.cardType == 'song' ? 'flex': ''}>
+                <div style={props.cardType == 'artist' ? {marginBottom: 10+'px'}: {}}>
+                    <img className={props.cardType == 'song' ? 'song-image' : 'artist-image'} src={props.result.image}/>
                 </div>
-                <div style={cardType == 'song' ? {paddingLeft: 15+'px'}: {}}>
-                    <p >{cardType === 'song' ? result.title : result.name}</p>
+                <div style={props.cardType == 'song' ? {paddingLeft: 15+'px'}: {}}>
+                    <p >{props.cardType === 'song' ? props.result.title : props.result.name}</p>
                 </div>
                 <div>
-                    <p className='resultCard-subText'>{cardType === 'song' ? result.artist : result.followers}</p>
+                    <p className='resultCard-subText'>{props.cardType === 'song' ? props.result.artist : props.result.followers}</p>
                 </div>
             </div>
+            {props.cardType === 'song' &&
             <div>
-                <span className='resultCard-subText'>{cardType === 'song' ? parseFloat((result.duration/1000)/60).toFixed(2) : result.followers}</span>
-            </div>
+                <span className='resultCard-subText'>{parseFloat((props.result.duration/1000)/60).toFixed(2)}</span>
+            </div>}
         </div>
     )
 }
